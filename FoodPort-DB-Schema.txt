@@ -1,0 +1,145 @@
+FoodPort Database Schema
+
+This file contains the SQL code to create the database schema for the FoodPort food delivery application. The schema includes the following tables:
+
+1. user - Stores information about users like name, email, phone number, password, and address.
+2. restaurant - Contains details about restaurants, including name, address, cuisine type, and ratings.
+3. menu - Stores the menu items offered by restaurants, including price and availability.
+4. ordertable - Tracks orders placed by users, including order details, status, and payment method.
+5. orderitem - Stores individual items within an order, including quantity and subtotal.
+6. orderhistory - Maintains a history of past orders for users, including total amount and status.
+
+This schema ensures proper relationships between users, restaurants, and orders, supporting the main functionality of the FoodPort application.
+
+
+user
+-----
+
+CREATE TABLE `tapfoods`.`user` (
+  `userId` INT NOT NULL AUTO_INCREMENT,
+  `userName` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `phoneNumber` VARCHAR(10) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `address` VARCHAR(100) NOT NULL,
+  `createdDate` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastLogin` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`userId`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
+  UNIQUE INDEX `phoneNumber_UNIQUE` (`phoneNumber` ASC) VISIBLE);
+
+
+restaurant
+------------
+
+CREATE TABLE `tapfoods`.`restaurant` (
+  `restaurantId` INT NOT NULL AUTO_INCREMENT,
+  `restaurantName` VARCHAR(45) NULL,
+  `deliveryTime` INT NULL,
+  `cuisineType` VARCHAR(45) NULL,
+  `address` VARCHAR(45) NULL,
+  `ratings` FLOAT NULL,
+  `isActive` VARCHAR(10) NULL,
+  `adminId` INT NULL,
+  `imgPath` VARCHAR(45) NULL,
+  PRIMARY KEY (`restaurantId`),
+  INDEX `adminId_idx` (`adminId` ASC) VISIBLE,
+  CONSTRAINT `adminId`
+    FOREIGN KEY (`adminId`)
+    REFERENCES `tapfoods`.`user` (`userId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+menu
+-------
+
+CREATE TABLE `tapfoods`.`menu` (
+  `menuId` INT NOT NULL AUTO_INCREMENT,
+  `restaurantId` INT NULL,
+  `menuName` VARCHAR(45) NULL,
+  `price` FLOAT NULL,
+  `description` VARCHAR(200) NULL,
+  `isAvailable` VARCHAR(45) NULL,
+  `imgPath` VARCHAR(45) NULL,
+  PRIMARY KEY (`menuId`),
+  INDEX `restaurantId_idx` (`restaurantId` ASC) VISIBLE,
+  CONSTRAINT `restaurantId`
+    FOREIGN KEY (`restaurantId`)
+    REFERENCES `tapfoods`.`restaurant` (`restaurantId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+ordertable
+------------
+
+CREATE TABLE `tapfoods`.`ordertable` (
+  `orderId` INT NOT NULL AUTO_INCREMENT,
+  `restaurantId` INT NULL,
+  `userId` INT NULL,
+  `orderDate` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `totalAmount` FLOAT NULL,
+  `status` VARCHAR(45) NULL,
+  `paymentMode` VARCHAR(45) NULL,
+  PRIMARY KEY (`orderId`),
+  INDEX `restaurantId_idx` (`restaurantId` ASC) VISIBLE,
+  INDEX `userId_idx` (`userId` ASC) VISIBLE,
+  CONSTRAINT `fk_order_restaurant`
+    FOREIGN KEY (`restaurantId`)
+    REFERENCES `tapfoods`.`restaurant` (`restaurantId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_order_user`
+    FOREIGN KEY (`userId`)
+    REFERENCES `tapfoods`.`user` (`userId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+orderitem
+------------
+
+CREATE TABLE `tapfoods`.`orderitem` (
+  `orderItemId` INT NOT NULL AUTO_INCREMENT,
+  `orderId` INT NULL,
+  `menuId` INT NULL,
+  `quantity` INT NULL,
+  `subTotal` FLOAT NULL,
+  PRIMARY KEY (`orderItemId`),
+  INDEX `orderId_idx` (`orderId` ASC) VISIBLE,
+  INDEX `menuId_idx` (`menuId` ASC) VISIBLE,
+  CONSTRAINT `orderId`
+    FOREIGN KEY (`orderId`)
+    REFERENCES `tapfoods`.`ordertable` (`orderId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `menuId`
+    FOREIGN KEY (`menuId`)
+    REFERENCES `tapfoods`.`menu` (`menuId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+orderhistory
+---------------
+
+CREATE TABLE `tapfoods`.`orderhistory` (
+  `orderHistoryId` INT NOT NULL AUTO_INCREMENT,
+  `orderId` INT NULL,
+  `userId` INT NULL,
+  `orderDate` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `totalAmount` FLOAT NULL,
+  `status` VARCHAR(45) NULL,
+  PRIMARY KEY (`orderHistoryId`),
+  INDEX `orderId_idx` (`orderId` ASC) VISIBLE,
+  INDEX `userId_idx` (`userId` ASC) VISIBLE,
+  CONSTRAINT `fk_orderhistory_order`
+    FOREIGN KEY (`orderId`)
+    REFERENCES `tapfoods`.`ordertable` (`orderId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_orderhistory_user`
+    FOREIGN KEY (`userId`)
+    REFERENCES `tapfoods`.`user` (`userId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
