@@ -1,0 +1,81 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: url('https://wallpapercave.com/wp/wp7603919.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-container {
+    background-color: rgba(0, 0, 0, 0.5); 
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px; 
+    color: white;
+    text-align: center; 
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: white; 
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px 5px;
+    margin-bottom: 25px; 
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.7); 
+    background-color: transparent;
+    font-size: 16px;
+    color: white;
+    outline: none;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+input:focus {
+    border-bottom: 2px solid #ffffff;
+}
+
+button {
+    width: 150px; 
+    padding: 10px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto 0; 
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.register-prompt {
+    margin-top: 10px; 
+    font-size: 14px;
+}
+
+.register-prompt a {
+    color: #28a745;
+    text-decoration: none;
+}
+
+.register-prompt a:hover {
+    text-decoration: underline;
+}

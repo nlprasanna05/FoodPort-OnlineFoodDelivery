@@ -1,0 +1,110 @@
+body {
+    background-color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+header {
+    background-color: #ff4f00; 
+    color: white;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+nav {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px; 
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li a {
+    color: white; 
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center; 
+}
+
+.nav-links li a i {
+    margin-right: 8px;
+    font-size: 20px; 
+}
+
+.nav-links li a:hover {
+    background-color: #e03b00; 
+    border-radius: 4px;
+}
+
+h1 {
+    text-align: center;
+    color: #ff6600; 
+    margin: 80px 0 40px 0; 
+}
+
+.order-box {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 50%;
+    margin: 0 auto 20px auto; 
+    border-bottom: 4px solid #fc8019; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    text-align: center;
+}
+
+.order-box h3 {
+    font-weight: bold;
+    color: #333;
+}
+
+.order-box p {
+    margin: 10px 0;
+    color: #666;
+}
+
+.order-box form button {
+    background-color: #ff6600; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.order-box form button:hover {
+    background-color: #e65c00; 
+}
+
+@media (max-width: 768px) {
+    .order-box {
+        width: 80%;
+    }
+}
+
+@media (max-width: 480px) {
+    .order-box {
+        width: 95%;
+    }
+}
